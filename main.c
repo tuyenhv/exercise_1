@@ -87,14 +87,26 @@ void bubble_sort(float list[], int n){
         swap(&list[j],&list[j+1]);
 }
 
-/*
 float distance_points(struct point a, struct point b){
   return sqrt(((a.x - b.x) * (a.x - b.x)) + ((a.y - b.y) * (a.y - b.y)));
+}
+
+/*
+float caculate_area_triangle(struct point a, struct point b, struct point c){
+  return abs((a.x * (b.y - c.y) + b.x * (c.y - a.y) + c.x * (a.y - b.y)) / 2.0);
 }
 */
 
 float caculate_area_triangle(struct point a, struct point b, struct point c){
-  return abs((a.x * (b.y - c.y) + b.x * (c.y - a.y) + c.x * (a.y - b.y)) / 2.0);
+  float xa, xb, xc, p;
+  xa = distance_points(b,c);
+  xb = distance_points(a,c);
+  xc = distance_points(a,b);
+  p = (xa + xb + xc) / 2.0;
+  if (xa + xb <= xc || xa + xc <= xb || xb + xc <= xa)
+    return 0;
+  else
+    return sqrt(p * (p - xa) * (p - xb) * (p - xc));
 }
 
 int count_lines_from_points(struct point points[], int number_points){
