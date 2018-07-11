@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <math.h>
 #include "points.h"
 
 int main()
@@ -24,6 +25,7 @@ int main()
   }
 
   printf("The number of lines is: %d \n", count_lines_from_points(points, number_points));
+  count_triangle_from_points(points, number_points);
   return 0;
 }
 
@@ -85,6 +87,16 @@ void bubble_sort(float list[], int n){
         swap(&list[j],&list[j+1]);
 }
 
+/*
+float distance_points(struct point a, struct point b){
+  return sqrt(((a.x - b.x) * (a.x - b.x)) + ((a.y - b.y) * (a.y - b.y)));
+}
+*/
+
+float caculate_area_triangle(struct point a, struct point b, struct point c){
+  return abs((a.x * (b.y - c.y) + b.x * (c.y - a.y) + c.x * (a.y - b.y)) / 2.0);
+}
+
 int count_lines_from_points(struct point points[], int number_points){
   int i, j, k, count, m;
   float scale_factors[number_points];
@@ -117,4 +129,22 @@ int count_lines_from_points(struct point points[], int number_points){
     return (int)count_lines + 1;
   else
     return (int)count_lines;
+}
+
+int count_triangle_from_points(struct point points[], int number_points){
+  int i, j, k, triangle_number = 0;
+  float triangle_area;
+  for (i = 0; i < number_points - 2; i++){
+    for (j = i + 1; j < number_points - 1; j++){
+      for (k = j + 1; k < number_points; k++){
+        triangle_area = caculate_area_triangle(points[i], points[j], points[k]);
+        if (triangle_area > 0){
+          printf("The area of triangle from three points %d, %d, %d is: %f \n", i, j, k, triangle_area);
+          triangle_number++;
+        }
+      }
+    }
+  }
+  printf("The number of triangle is: %d \n", triangle_number);
+  return triangle_number;
 }
