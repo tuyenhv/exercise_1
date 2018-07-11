@@ -70,18 +70,19 @@ float scale_factor(struct point a, struct point b){
   return (a.y - b.y)/(a.x - b.x);
 }
 
+void swap(float *xp, float *yp){
+    float temp = *xp;
+    *xp = *yp;
+    *yp = temp;
+}
+
 /* Bubble sort algorithm */
 void bubble_sort(float list[], int n){
   int i, j, temp;
-  for (i = 0; i < n - 1; i++){
-    for (j = 0; j < n - i - 1; j++){
-      if (list[j] > list[j + 1]){
-        temp = list[j];
-        list[j] = list[j + 1];
-        list[j + 1] = temp;
-      }
-    }
-  }
+  for (i = 0; i < n - 1; i++)
+    for (j = 0; j < n - i - 1; j++)
+      if (list[j] > list[j + 1])
+        swap(&list[j],&list[j+1]);
 }
 
 int count_lines_from_points(struct point points[], int number_points){
@@ -112,5 +113,8 @@ int count_lines_from_points(struct point points[], int number_points){
       }
     }
   }
-  return (int)count_lines;
+  if (count_lines - (int)count_lines > 0.5)
+    return (int)count_lines + 1;
+  else
+    return (int)count_lines;
 }
