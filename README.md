@@ -8,6 +8,7 @@ Input N points A(x0, y0), B(x1, y1), ...
 
 ## How to build
 Run $ make
+or run $ gcc main.c -o main -lm
 
 ## How to run
 Run $ ./main
