@@ -9,7 +9,13 @@ int main()
   struct point points[MAX_POINTS], points_polygon[MAX_POINTS];
 
   printf("The number of points in our space: \n");
-  scanf("%d",&number_points);
+  while (true){
+    scanf("%d",&number_points);
+    if (number_points > 1)
+      break;
+    else
+      printf ("The number needs to be greater than 2, type again: \n");
+  }
 
   printf("Please input values for points \n");
   for (i = 0; i < number_points; i++){
@@ -154,6 +160,10 @@ int count_lines_from_points(struct point points[], int number_points){
 }
 
 int count_triangle_from_points(struct point points[], int number_points){
+  if (number_points < 3){
+    printf("Need more than two points \n");
+    return -1;
+  }
   int i, j, k, triangle_number = 0;
   float triangle_area;
   for (i = 0; i < number_points - 2; i++){
@@ -193,6 +203,10 @@ int find_left(struct point points[], int number_points){
 }
 
 int find_polygon(struct point points[], int number_points, struct point points_polygon[]){
+  if (number_points < 3){
+    printf("Need more than two points \n");
+    return -1;
+  }
   int l = find_left(points, number_points), i;
   int p = l, q, count = 0;
   do {
@@ -213,6 +227,10 @@ int find_polygon(struct point points[], int number_points, struct point points_p
 
 /* Caculate the area of a polygon with n points */
 float polygon_area(struct point pts[], int n){
+  if (n < 3){
+    printf("Need more than two points \n");
+    return -1;
+  }
   float area = 0.0;
   int j = n - 1, i;
   for (i = 0; i < n; i++){
