@@ -23,16 +23,18 @@ int main()
         printf("The input data is not valid, please try again \n");
     }
   }
-
+  printf("\n===================================================\n");
   printf("The number of lines is: %d \n", count_lines_from_points(points, number_points));
+  printf("\n===================================================\n");
   count_triangle_from_points(points, number_points);
+  printf("\n===================================================\n");
   number_points_polygon = find_polygon(points, number_points, points_polygon);
 
   for (i = 0; i < number_points_polygon; i++){
     printf ("The coordinate of points on polygon is: x = %f, y = %f \n", points_polygon[i].x, points_polygon[i].y);
   }
 
-  printf("The area of polygon is: %f \n", polygon_area(points_polygon, number_points_polygon));
+  printf("\nThe area of polygon is: %f \n", polygon_area(points_polygon, number_points_polygon));
 
   return 0;
 }
