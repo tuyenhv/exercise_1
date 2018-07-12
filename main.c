@@ -26,6 +26,7 @@ int main()
 
   printf("The number of lines is: %d \n", count_lines_from_points(points, number_points));
   count_triangle_from_points(points, number_points);
+  find_polygon(points, number_points);
   return 0;
 }
 
@@ -159,4 +160,67 @@ int count_triangle_from_points(struct point points[], int number_points){
   }
   printf("The number of triangle is: %d \n", triangle_number);
   return triangle_number;
+}
+
+/* To find orientation of ordered triplet (p, q, r).
+The function returns following values
+0 --> p, q and r are colinear
+1 --> Clockwise
+2 --> Counterclockwise */
+int orientation(struct point a, struct point b, struct point c){
+  int val = (b.y - a.y) * (c.x - b.x) - (b.x - a.x) * (c.y - b.y);
+  if (val == 0) return 0; // colinear
+  return (val > 0)? 1: 2; // Clockwise or Counterclockwise
+}
+
+/* Find the position point which has the minimum of abscissa */
+int find_left(struct point points[], int number_points){
+  int i, left_num = 0;
+  for (i = 1; i < number_points; i++){
+    if (points[i].x < points[left_num].x)
+      left_num = i;
+  }
+  return left_num;
+}
+
+//void find_polygon(struct point points[], int number_points, struct point polygon_points[], int *polygon_points_number){
+void find_polygon(struct point points[], int number_points){
+  int l = find_left(points, number_points), i;
+
+  // Initialize result
+  int next[number_points];
+  for (i = 0; i < number_points; i++)
+    next[i] = -1;
+
+  int p = l, q;
+  do {
+    // Search for a point 'q' such that orientation(p, i, q) is Counterclockwise
+    // for all points 'i'
+    q = (p + 1) % number_points;
+    for (i = 0; i < number_points; i++)
+      if (orientation(points[p], points[i], points[q]) == 2)
+        q = i;
+
+    next[p] = q; // Add q to result as a next point of p
+    p = q; // Set p as q for next iteration
+  }
+  while (p != l);
+
+  // Print Result
+  for (i = 0; i < number_points; i++)
+  {
+    if (next[i] != -1)
+      printf("The point number %d: x = %f, y = %f \n", i, points[i].x, points[i].y);
+  }
+}
+
+/* Caculate the area of a polygon with n points */
+float polygon_area(struct pts[], int n){
+  float area = 0.0;
+  int j = n - 1, i;
+  for (i = 0; i < n; i++){
+    area += (pts[j].x + pts[i].x) * (pts[j].y - pts[i].y)
+    j = i;
+  }
+  return abs(area / 2.0);
 }

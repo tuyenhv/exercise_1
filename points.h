@@ -19,5 +19,9 @@ float distance_points(struct point a, struct point b);
 float caculate_area_triangle(struct point a, struct point b, struct point c);
 int count_lines_from_points(struct point points[], int number_points);
 int count_triangle_from_points(struct point points[], int number_points);
+int orientation(struct point a, struct point b, struct point c);
+int find_left(struct point points[], int number_points);
+void find_polygon(struct point points[], int number_points);
+float polygon_area(struct pts[], int n);
 
 #endif
