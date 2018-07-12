@@ -5,8 +5,8 @@
 
 int main()
 {
-  int number_points, i;
-  struct point points[MAX_POINTS];
+  int number_points, i, number_points_polygon;
+  struct point points[MAX_POINTS], points_polygon[MAX_POINTS];
 
   printf("The number of points in our space: \n");
   scanf("%d",&number_points);
@@ -26,7 +26,9 @@ int main()
 
   printf("The number of lines is: %d \n", count_lines_from_points(points, number_points));
   count_triangle_from_points(points, number_points);
-  find_polygon(points, number_points);
+  number_points_polygon = find_polygon(points, number_points, points_polygon);
+  printf("The area of polygon is: %f \n", polygon_area(points_polygon, number_points_polygon));
+
   return 0;
 }
 
@@ -184,7 +186,7 @@ int find_left(struct point points[], int number_points){
 }
 
 //void find_polygon(struct point points[], int number_points, struct point polygon_points[], int *polygon_points_number){
-void find_polygon(struct point points[], int number_points){
+int find_polygon(struct point points[], int number_points, struct point points_polygon[]){
   int l = find_left(points, number_points), i;
 
   // Initialize result
@@ -192,7 +194,7 @@ void find_polygon(struct point points[], int number_points){
   for (i = 0; i < number_points; i++)
     next[i] = -1;
 
-  int p = l, q;
+  int p = l, q, count = 0;
   do {
     // Search for a point 'q' such that orientation(p, i, q) is Counterclockwise
     // for all points 'i'
@@ -209,18 +211,22 @@ void find_polygon(struct point points[], int number_points){
   // Print Result
   for (i = 0; i < number_points; i++)
   {
-    if (next[i] != -1)
+    if (next[i] != -1){
       printf("The point number %d: x = %f, y = %f \n", i, points[i].x, points[i].y);
+      points_polygon[count] = points[i];
+      count++;
+    }
   }
+  return count;
 }
 
 /* Caculate the area of a polygon with n points */
-float polygon_area(struct pts[], int n){
+float polygon_area(struct point pts[], int n){
   float area = 0.0;
   int j = n - 1, i;
   for (i = 0; i < n; i++){
-    area += (pts[j].x + pts[i].x) * (pts[j].y - pts[i].y)
+    area += (pts[j].x + pts[i].x) * (pts[j].y - pts[i].y);
     j = i;
   }
-  return abs(area / 2.0);
+  return fabs(area / 2.0);
 }
