@@ -27,6 +27,11 @@ int main()
   printf("The number of lines is: %d \n", count_lines_from_points(points, number_points));
   count_triangle_from_points(points, number_points);
   number_points_polygon = find_polygon(points, number_points, points_polygon);
+
+  for (i = 0; i < number_points_polygon; i++){
+    printf ("The coordinate of points on polygon is: x = %f, y = %f \n", points_polygon[i].x, points_polygon[i].y);
+  }
+
   printf("The area of polygon is: %f \n", polygon_area(points_polygon, number_points_polygon));
 
   return 0;
@@ -188,12 +193,6 @@ int find_left(struct point points[], int number_points){
 //void find_polygon(struct point points[], int number_points, struct point polygon_points[], int *polygon_points_number){
 int find_polygon(struct point points[], int number_points, struct point points_polygon[]){
   int l = find_left(points, number_points), i;
-
-  // Initialize result
-  int next[number_points];
-  for (i = 0; i < number_points; i++)
-    next[i] = -1;
-
   int p = l, q, count = 0;
   do {
     // Search for a point 'q' such that orientation(p, i, q) is Counterclockwise
@@ -203,20 +202,11 @@ int find_polygon(struct point points[], int number_points, struct point points_p
       if (orientation(points[p], points[i], points[q]) == 2)
         q = i;
 
-    next[p] = q; // Add q to result as a next point of p
+    points_polygon[count] = points[q];
+    count++;
     p = q; // Set p as q for next iteration
   }
   while (p != l);
-
-  // Print Result
-  for (i = 0; i < number_points; i++)
-  {
-    if (next[i] != -1){
-      printf("The point number %d: x = %f, y = %f \n", i, points[i].x, points[i].y);
-      points_polygon[count] = points[i];
-      count++;
-    }
-  }
   return count;
 }
 
