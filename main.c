@@ -190,7 +190,6 @@ int find_left(struct point points[], int number_points){
   return left_num;
 }
 
-//void find_polygon(struct point points[], int number_points, struct point polygon_points[], int *polygon_points_number){
 int find_polygon(struct point points[], int number_points, struct point points_polygon[]){
   int l = find_left(points, number_points), i;
   int p = l, q, count = 0;
