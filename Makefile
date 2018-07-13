@@ -1,10 +1,13 @@
-CC=gcc 
-CFLAGS=-Wall
+CC = gcc
+
+CFLAGS = -Wall
+
 LDFLAGS=-lm
 
 all: main
+
 main: main.o
-main.o: main.c points.h
+	$(CC) $(CFLAGS) main.o -o main $(LDFLAGS)
 
 clean:
-	rm -f main *.o
+	rm -f main.o main
