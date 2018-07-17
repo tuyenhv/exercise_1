@@ -11,10 +11,10 @@ int main()
   printf("The number of points in our space: \n");
   while (true){
     scanf("%d",&number_points);
-    if (number_points > 1)
+    if ((number_points > 1) && (number_points < MAX_POINTS))
       break;
     else
-      printf ("The number needs to be greater than 2, type again: \n");
+      printf ("The number needs to be greater than 2 and less than %d, type again: \n", MAX_POINTS);
   }
 
   printf("Please input values for points \n");
@@ -23,6 +23,9 @@ int main()
     while(true){
       input_point(&points[i]);
       // Make sure that the point which you have just inputted is not duplicated.
+      // The first element does not need to check_input_valid, from the second
+      // element, they need to be check_input_valid to make sure they are not
+      // duplicated with the other elements before.
       if ((i < 1) || check_input_valid(points, points[i],i))
         break;
       else
